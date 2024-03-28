@@ -31,7 +31,8 @@
     "axios": "^1.6.7",
     "bottleneck": "^2.19.5",
     "jsdom": "^24.0.0",
-    "showdown": "^2.1.0"
+    "showdown": "^2.1.0",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.0",

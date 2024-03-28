@@ -4,6 +4,7 @@ const get = require('lodash/get')
 const set = require('lodash/set')
 const groupBy = require('lodash/groupBy')
 
+const slugify = require('slugify')
 const { getService } = require('../utils/get-service')
 const { BatchTranslateManager } = require('./batch-translate')
 
@@ -18,25 +19,28 @@ module.exports = ({ strapi }) => ({
     return text.length
   },
 
-  async translate({
-    data,
-    sourceLocale,
-    targetLocale,
-    fieldsToTranslate,
-    priority,
-  }) {
+  async translate({ data, sourceLocale, targetLocale, fieldsToTranslate, priority }) {
     // Do not translate if there is nothing to do (for language variants)
     if (sourceLocale === targetLocale) {
       return data
     }
-
     const groupedFields = groupBy(fieldsToTranslate, 'format')
+    const slugFields = fieldsToTranslate.filter(
+      ({ field }) => /[-_]/.test(data[field]) && !data[field].includes(' ')).map(
+      ({ field }) => field,
+    )
 
     const translatedData = { ...data }
     await Promise.all(
       Object.keys(groupedFields).map(async (format) => {
-        const textsToTranslate = groupedFields[format].map(({ field }) =>
-          get(data, field, '')
+        const textsToTranslate = groupedFields[format].map(
+          ({ field }) => {
+            const text = get(data, field, '')
+            if (slugFields.includes(field)) {
+              return text.replace(/[-_]/g, ' ')
+            }
+            return text
+          },
         )
         const translateResult = await strapi
           .plugin('translate')
@@ -49,9 +53,23 @@ module.exports = ({ strapi }) => ({
           })
 
         groupedFields[format].forEach(({ field }, index) => {
-          set(translatedData, field, translateResult[index])
+          let value
+          if (slugFields.includes(field)) {
+            value = slugify(
+              translateResult[index],
+              {
+                replacement: '-',
+                lower: true,
+                locale: targetLocale,
+                remove: /[`'"]/g,
+              },
+            )
+          } else {
+            value = translateResult[index]
+          }
+          set(translatedData, field, value)
         })
-      })
+      }),
     )
 
     return translatedData
@@ -71,7 +89,7 @@ module.exports = ({ strapi }) => ({
   },
   async contentTypes() {
     const localizedContentTypes = Object.keys(strapi.contentTypes).filter(
-      (ct) => strapi.contentTypes[ct].pluginOptions?.i18n?.localized
+      (ct) => strapi.contentTypes[ct].pluginOptions?.i18n?.localized,
     )
 
     const locales = await strapi.service('plugin::i18n.locales').find()
@@ -94,13 +112,13 @@ module.exports = ({ strapi }) => ({
               .count({ where: { locale: code } })
             const complete = await getService('untranslated').isFullyTranslated(
               contentType,
-              code
+              code,
             )
             return {
               count: await countPromise,
               complete,
             }
-          })
+          }),
         )
 
         // create report
@@ -116,7 +134,7 @@ module.exports = ({ strapi }) => ({
           collection: strapi.contentTypes[contentType].info.displayName,
           localeReports,
         }
-      })
+      }),
     )
     return { contentTypes: reports, locales }
   },
