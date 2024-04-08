@@ -24,7 +24,10 @@ module.exports = ({ strapi }) => ({
     if (sourceLocale === targetLocale) {
       return data
     }
-    const groupedFields = groupBy(fieldsToTranslate, 'format')
+    const fieldsWithoutEmptyStrings = fieldsToTranslate.filter(
+      ({ field }) => data[field].trim() !== '',
+    )
+    const groupedFields = groupBy(fieldsWithoutEmptyStrings, 'format')
     const slugFields = fieldsToTranslate.filter(
       ({ field }) => /[-_]/.test(data[field]) && !data[field].includes(' ')).map(
       ({ field }) => field,
@@ -42,6 +45,7 @@ module.exports = ({ strapi }) => ({
             return text
           },
         )
+        strapi.log.info("textsToTranslate", textsToTranslate)
         const translateResult = await strapi
           .plugin('translate')
           .provider.translate({

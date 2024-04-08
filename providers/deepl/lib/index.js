@@ -59,6 +59,7 @@ module.exports = {
         if (!text) {
           return []
         }
+        console.log("Translate text: ", text)
         if (!sourceLocale || !targetLocale) {
           throw new Error('source and target locale must be defined')
         }
@@ -79,6 +80,8 @@ module.exports = {
           maxByteSize: DEEPL_API_ROUGH_MAX_REQUEST_SIZE,
         })
 
+        console.log("Chunks: ", chunks)
+
         const result = reduceFunction(
           await Promise.all(
             chunks.map(async (texts) => {
@@ -98,6 +101,8 @@ module.exports = {
             })
           )
         )
+
+        console.log("Translation result: ", result)
 
         if (format === 'markdown') {
           return formatService.htmlToMarkdown(result)

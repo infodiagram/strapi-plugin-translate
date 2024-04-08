@@ -183,11 +183,12 @@ class BatchTranslateJob {
 
       // Translate the entity
       try {
+        strapi.log.info(`Translating entity: ${entity.id}`)
         const fieldsToTranslate = await getAllTranslatableFields(
           entity,
           this.contentTypeSchema
         )
-
+        strapi.log.info(`Fields to translate: ${JSON.stringify(fieldsToTranslate)}`)
         const translated = await getService('translate').translate({
           data: entity,
           sourceLocale: this.sourceLocale,
