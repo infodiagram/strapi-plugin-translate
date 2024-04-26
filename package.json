@@ -1,5 +1,5 @@
 {
-  "name": "strapi-translate-monorepo",
+  "name": "@infodiagram/strapi-translate-monorepo",
   "private": true,
   "workspaces": [
     "plugin",
@@ -12,7 +12,8 @@
     "commit": "cz",
     "test": "yarn workspaces run test",
     "lint": "eslint .",
-    "release": "multi-semantic-release --ignore-private-packages"
+    "release": "multi-semantic-release --ignore-private-packages",
+    "artifactregistry-login": "npx google-artifactregistry-auth"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.23.10",
