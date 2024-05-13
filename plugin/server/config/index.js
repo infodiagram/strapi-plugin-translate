@@ -9,6 +9,7 @@ module.exports = {
         { type: 'string', format: 'plain' },
         { type: 'text', format: 'plain' },
         { type: 'richtext', format: 'markdown' },
+        { type: 'blocks', format: 'jsonb'},
         'component',
         'dynamiczone',
       ],
