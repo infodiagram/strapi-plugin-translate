@@ -25,7 +25,12 @@ module.exports = ({ strapi }) => ({
       return data
     }
     const fieldsWithoutEmptyStrings = fieldsToTranslate.filter(
-      ({ field }) => data[field].trim() !== '',
+      ({ field }) => {
+        if (typeof data[field] === 'string') {
+          return data[field].trim() !== ''
+        }
+        return true
+      }
     )
     const groupedFields = groupBy(fieldsWithoutEmptyStrings, 'format')
     const slugFields = fieldsToTranslate.filter(

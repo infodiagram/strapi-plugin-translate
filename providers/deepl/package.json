@@ -1,6 +1,6 @@
 {
   "name": "@infodiagram/strapi-provider-translate-deepl",
-  "version": "1.1.13-infoDiagram",
+  "version": "1.1.14-infoDiagram",
   "description": "DeepL provider for translate plugin in Strapi 4",
   "keywords": [
     "strapi",
