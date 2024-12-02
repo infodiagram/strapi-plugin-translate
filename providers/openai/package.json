@@ -1,12 +1,12 @@
 {
-  "name": "@infodiagram/strapi-provider-translate-deepl",
+  "name": "@infodiagram/strapi-provider-translate-openai",
   "version": "1.1.15-infoDiagram",
   "description": "DeepL provider for translate plugin in Strapi 4",
   "keywords": [
     "strapi",
     "translate",
     "provider",
-    "deepl"
+    "openai"
   ],
   "homepage": "https://github.com/infodiagram/strapi-plugin-translate",
   "bugs": {
@@ -18,37 +18,36 @@
   },
   "license": "MIT",
   "author": {
-    "name": "Felix Haase",
-    "email": "felix.haase@feki.de"
+    "name": "Marcin Trofimiuk",
+    "email": "marcin@trof.dev"
   },
   "maintainers": [
     {
-      "name": "Felix Haase",
-      "email": "felix.haase@feki.de"
-    },
-    {
-      "name": "Yannick Lang",
-      "email": "yannick.lang@feki.de"
+      "name": "Marcin Trofimiuk",
+      "email": "marcin@trof.dev"
     }
   ],
   "contributors": [],
-  "main": "./lib",
+  "main": "./dist/lib",
   "directories": {
-    "lib": "./lib"
+    "lib": "./dist/lib"
   },
   "scripts": {
-    "test": "jest",
-    "artifactregistry-login": "npx google-artifactregistry-auth"
+    "artifactregistry-login": "npx google-artifactregistry-auth",
+    "build": "tsc"
   },
   "dependencies": {
     "bottleneck": "^2.19.5",
-    "deepl-node": "^1.11.1"
+    "openai": "^4.73.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.0",
     "@strapi/plugin-i18n": "^4.15.0",
+    "add": "^2.0.6",
+    "eslint": "^9.15.0",
     "jest": "^29.7.0",
-    "msw": "^2.1.5"
+    "msw": "^2.1.5",
+    "prettier": "^3.4.0"
   },
   "peerDependencies": {
     "lodash": "*",

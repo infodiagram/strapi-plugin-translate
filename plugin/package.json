@@ -1,6 +1,6 @@
 {
   "name": "@infodiagram/strapi-plugin-translate",
-  "version": "1.2.6-infoDiagram",
+  "version": "1.2.7-infoDiagram",
   "description": "Strapi plugin for managing and automating translation of content",
   "keywords": [
     "strapi",

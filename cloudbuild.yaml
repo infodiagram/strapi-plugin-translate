@@ -1,0 +1,14 @@
+steps:
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'artifactregistry-login']
+
+  # Steps for providers/deepl/ directory
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['publish']
+    dir: 'providers/deepl/'
+
+  # Steps for plugin/ directory
+
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['publish']
+    dir: 'plugin/'
