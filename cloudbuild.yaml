@@ -7,7 +7,7 @@ steps:
     args: ['publish']
     dir: 'providers/deepl/'
 
-  # Steps for providers/deepl/ directory
+  # Steps for providers/openai/ directory
   - name: 'gcr.io/cloud-builders/npm'
     args: ['publish']
     dir: 'providers/openai/'

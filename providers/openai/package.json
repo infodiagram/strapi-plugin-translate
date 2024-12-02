@@ -1,7 +1,7 @@
 {
   "name": "@infodiagram/strapi-provider-translate-openai",
-  "version": "1.1.15-infoDiagram",
-  "description": "DeepL provider for translate plugin in Strapi 4",
+  "version": "1.1.16-infoDiagram",
+  "description": "OpenAI provider for translate plugin in Strapi 4",
   "keywords": [
     "strapi",
     "translate",
@@ -14,18 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/infodiagram/strapi-plugin-translate.git"
+    "url": "git+https://github.com/infodiagram/strapi-plugin-translate.git"
   },
   "license": "MIT",
-  "author": {
-    "name": "Marcin Trofimiuk",
-    "email": "marcin@trof.dev"
-  },
+  "author": "Marcin Trofimiuk <marcin@trof.dev>",
   "maintainers": [
-    {
-      "name": "Marcin Trofimiuk",
-      "email": "marcin@trof.dev"
-    }
+    "Marcin Trofimiuk <marcin@trof.dev>"
   ],
   "contributors": [],
   "main": "./dist/lib",
