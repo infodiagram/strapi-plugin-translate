@@ -224,6 +224,20 @@ class BatchTranslateJob {
         fullyTranslatedData.publishedAt =
           entity.publishedAt && this.autoPublish ? new Date() : null
         // Create localized entry
+
+        // here we need to figure out how to make sure translated text fits the table schema
+        // we care only about the text fields at the moment
+        for (const field of fieldsToTranslate) {
+          if (field.format === 'plain') {
+            const text = fullyTranslatedData[field.field]
+            const translateProvider = strapi.plugin('translate').provider
+            console.log(translateProvider)
+            if (text.length > 255){
+              fullyTranslatedData[field.field] = await translateProvider.shorten({text, length: 255})
+            }
+          }
+        }
+
         await strapi.entityService.create(this.contentType, {
           data: fullyTranslatedData,
           // Needed for syncing localizations

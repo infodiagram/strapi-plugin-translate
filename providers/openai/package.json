@@ -22,7 +22,7 @@
     "Marcin Trofimiuk <marcin@trof.dev>"
   ],
   "contributors": [],
-  "main": "./dist/lib",
+  "main": "./dist/lib/index.js",
   "directories": {
     "lib": "./dist/lib"
   },

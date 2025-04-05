@@ -64,6 +64,31 @@ const OpenAIProvider = {
         }
         return JSON.parse(translatedText)
       },
+      async shorten({text, length}: {text: string, length: number}): Promise<string> {
+          const prompt = `Shorten the following text to not more than ${length} characters. Can be less. Keep the language and meaning: \n${text}`
+          console.log('Shortening text:', text)
+          console.log('Prompt: ', prompt)
+          const response = await client.chat.completions.create({
+            model: 'gpt-4o-mini',
+            messages: [
+              {
+                role: 'system',
+                content: 'Do not add any additional information like that you are trained on data up to certain date',
+              },
+              {
+                role: 'user',
+                content: prompt,
+              },
+            ],
+          })
+          const shortenedText = response.choices[0].message.content
+          console.log("Shortened text: ", shortenedText)
+          if (!shortenedText) {
+            throw Error("Shortened text empty!")
+          }
+          return shortenedText
+      },
+
       async usage() {
         // Mocked usage function with static response
         console.log('Fetching usage data')
