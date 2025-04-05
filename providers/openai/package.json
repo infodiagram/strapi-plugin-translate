@@ -45,7 +45,7 @@
   },
   "peerDependencies": {
     "lodash": "*",
-    "strapi-plugin-translate": "1.2.4"
+    "@infodiagram/strapi-plugin-translate": "1.2.17-infoDiagram"
   },
   "engines": {
     "node": ">=14 <=20",
