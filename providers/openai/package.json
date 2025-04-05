@@ -1,6 +1,6 @@
 {
   "name": "@infodiagram/strapi-provider-translate-openai",
-  "version": "1.1.16-infoDiagram",
+  "version": "1.1.17-infoDiagram",
   "description": "OpenAI provider for translate plugin in Strapi 4",
   "keywords": [
     "strapi",
