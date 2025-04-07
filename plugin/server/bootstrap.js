@@ -37,6 +37,7 @@ const createProvider = (translateConfig) => {
 }
 
 module.exports = async ({ strapi }) => {
+  strapi.log.info('Bootstrapping translate plugin...')
   const translateConfig = strapi.config.get('plugin.translate')
   strapi.plugin('translate').provider = createProvider(translateConfig)
   await strapi.admin.services.permission.actionProvider.registerMany(actions)

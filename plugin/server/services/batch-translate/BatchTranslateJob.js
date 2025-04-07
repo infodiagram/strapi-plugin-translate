@@ -228,11 +228,13 @@ class BatchTranslateJob {
         // here we need to figure out how to make sure translated text fits the table schema
         // we care only about the text fields at the moment
         for (const field of fieldsToTranslate) {
-          if (field.format === 'plain') {
+          const schema = this.contentTypeSchema.attributes[field.field]
+          if (schema.type === 'string') {
+            strapi.log.warn("String field detected, checking length")
             const text = fullyTranslatedData[field.field]
             const translateProvider = strapi.plugin('translate').provider
-            console.log(translateProvider)
             if (text.length > 255){
+              strapi.log.warn(`String field is too long ${text.length}  shortening it`)
               fullyTranslatedData[field.field] = await translateProvider.shorten({text, length: 255})
             }
           }

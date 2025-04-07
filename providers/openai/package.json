@@ -1,6 +1,6 @@
 {
   "name": "@infodiagram/strapi-provider-translate-openai",
-  "version": "1.1.17-infoDiagram",
+  "version": "1.1.22-infoDiagram",
   "description": "OpenAI provider for translate plugin in Strapi 4",
   "keywords": [
     "strapi",
@@ -28,15 +28,17 @@
   },
   "scripts": {
     "artifactregistry-login": "npx google-artifactregistry-auth",
-    "build": "tsc"
+    "build": "tsc --build tsconfig.json"
   },
   "dependencies": {
     "bottleneck": "^2.19.5",
+    "mustache": "^4.2.0",
     "openai": "^4.73.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.0",
     "@strapi/plugin-i18n": "^4.15.0",
+    "@types/mustache": "^4.2.5",
     "add": "^2.0.6",
     "eslint": "^9.15.0",
     "jest": "^29.7.0",
@@ -44,8 +46,8 @@
     "prettier": "^3.4.0"
   },
   "peerDependencies": {
-    "lodash": "*",
-    "@infodiagram/strapi-plugin-translate": "1.2.17-infoDiagram"
+    "@infodiagram/strapi-plugin-translate": "1.2.17-infoDiagram",
+    "lodash": "*"
   },
   "engines": {
     "node": ">=14 <=20",
