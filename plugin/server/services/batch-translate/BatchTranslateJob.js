@@ -12,6 +12,11 @@ const { getAllTranslatableFields } = require('../../utils/translatable-fields')
 const { translateRelations } = require('../../utils/translate-relations')
 const { updateUids } = require('../../utils/update-uids')
 
+
+function getNestedValue(obj, path) {
+  return path.split('.').reduce((acc, key) => acc && acc[key], obj);
+}
+
 class BatchTranslateJob {
   constructor({
     id,
@@ -228,10 +233,17 @@ class BatchTranslateJob {
         // here we need to figure out how to make sure translated text fits the table schema
         // we care only about the text fields at the moment
         for (const field of fieldsToTranslate) {
-          const schema = this.contentTypeSchema.attributes[field.field]
+          let schema = this.contentTypeSchema.attributes[field.field]
+          if (!schema) {
+            const parts = field.field.split('.')
+            schema = this.contentTypeSchema.attributes[parts[0]]
+            if (schema.type == 'component') {
+                schema = strapi.components[schema.component].attributes[parts[2]]
+            }
+          }
           if (schema.type === 'string') {
             strapi.log.warn("String field detected, checking length")
-            const text = fullyTranslatedData[field.field]
+            const text = getNestedValue(fullyTranslatedData, field.field)
             const translateProvider = strapi.plugin('translate').provider
             if (text.length > 255){
               strapi.log.warn(`String field is too long ${text.length}  shortening it`)
